@@ -124,3 +124,18 @@
 - 正面：等宽 + tabular figures 保证数字列垂直对齐；连字 (ligatures) 可选开启
 - 正面：开源字体，可自由分发
 - 负面：字体文件约 200KB，首次加载有额外开销；Google Fonts 不托管，需自托管或使用 CDN
+
+---
+
+## ADR-009: JWT 单 Token 模式，明文存储于 localStorage
+
+**日期**: 2026-05-27
+
+**背景**: 后端 `POST /api/v1/admin/auth/login` 返回 `accessToken`（2 小时过期），不返回 refreshToken，也无 `/auth/refresh` 端点。JwtTokenProvider 内部有 `generateRefreshToken()` 方法但未通过 API 暴露。Token 过期后需重新登录。
+
+**决策**: 前端使用单 token 模式——登录后 `localStorage.setItem('token', accessToken)` 明文存储，`request.ts` 拦截器读出并附加 `Authorization: Bearer <token>` header。Zustand persist 中间件额外持久化 token 到 `auth-store` key 供 AuthGuard 通过 store 内存读取（避免 localStorage 异步写入时序问题）。logout 时 `localStorage.removeItem('token')`。
+
+**后果**:
+- 正面：与后端单 token 模式对齐，无需实现 refresh 逻辑；实现简单
+- 正面：token 通过 request 拦截器自动注入，组件层无感
+- 负面：明文存储 JWT，存在 XSS 风险。内部管理后台可接受。2 小时过期后用户需重新登录，频繁使用时体验略差

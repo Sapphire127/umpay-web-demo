@@ -15,6 +15,8 @@ src/
       index.scss              # 入口：@use 'theme'; @use 'globals';
       theme.scss              # CSS 自定义属性（设计令牌），html[data-theme] 定义
       globals.scss            # 全局 class（.card, .title, .gain, .loss）
+    assets/                   # 静态资源（SVG 等）
+    stores/                   # Zustand 全局状态
     domain/                   # 领域层 —— 纯 TS 业务逻辑，不依赖 React
       {module}/               # 按业务模块分
         {entity}.ts           # 类型定义，名词命名

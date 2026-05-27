@@ -1,9 +1,22 @@
 # 页面/模块映射
 
+## 当前模块
+
+### auth（认证模块）
+- 职责: 管理员登录、JWT 管理、TOTP 验证
+- 入口: domain/auth/authService.ts
+- 页面: page/Login/, page/Dashboard/
+- API: POST /api/v1/admin/auth/login
+
+### stores（状态管理）
+- authStore: token 管理、登录/登出、TOTP 流程
+- themeStore: data-theme 切换、localStorage 持久化
+
 ## 项目目录结构
 ```
 src/
   main/
+    assets/                   # 静态资源（SVG、图片等）
     style/                    # 全局样式
       index.scss              # @use 入口
       theme.scss              # CSS 自定义属性（html[data-theme]）
