@@ -87,3 +87,25 @@
 **后果**:
 - 正面：配置简洁；无协调开销；用户直接通过 Skill 驱动流程
 - 负面：如果后续引入后端 Agent，需重新评估 Agent 架构
+
+---
+
+## ADR-007: 技术栈选型补充
+
+**日期**: 2026-05-27
+
+**背景**: 初始技术栈定义较简略，参照 AskToken 后台项目的实际技术栈进行补充。数据展示后台的核心场景需要图表、高级表格、完善的测试体系和 API mock 能力。
+
+**决策**:
+- HTTP 客户端选用 **Axios**（而非 fetch）：统一的拦截器机制管理 token 注入和错误处理，配合 `domain/shared/request.ts`
+- 日期处理选用 **Day.js**：Ant Design 5 内置依赖，体积小
+- 图表选用 **Recharts**：React 生态最主流的图表库
+- 高级表格选用 **@ant-design/pro-components**：ProTable 一行代码搞定搜索+表格+分页
+- 测试选用 **Vitest + @testing-library/react + jest-dom + jsdom**：与 Vite 原生集成的测试方案
+- API Mock 选用 **MSW**：Service Worker 级别 mock，不影响代码结构；后端未就绪时按 API 契约 mock
+- 覆盖率选用 **@vitest/coverage-v8**
+
+**后果**:
+- 正面：覆盖了数据展示后台的全部核心场景（表格、图表、测试、mock）
+- 正面：MSW 使契约式开发成为可能——前端按 API 契约写 Service，后端未就绪时用 MSW mock
+- 负面：依赖数量增加，后续需关注 bundle size
