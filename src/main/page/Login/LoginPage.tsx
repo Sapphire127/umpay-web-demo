@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input, Button, Typography } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
 import { useThemeStore } from '@/stores/themeStore';
 import Logo from '@/assets/logo.svg?react';
@@ -9,6 +10,7 @@ import './LoginPage.scss';
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { login, isLoading, errorMsg } = useAuthStore();
   const { isDark, toggle: toggleTheme } = useThemeStore();
 
@@ -23,12 +25,26 @@ function LoginPage() {
     }
   };
 
+  const switchLang = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <div className="loginPage">
       <div className="headerBar">
         <div className="langGroup">
-          <button className="langBtn active">中</button>
-          <button className="langBtn">EN</button>
+          <button
+            className={`langBtn ${i18n.language === 'zh-CN' ? 'active' : ''}`}
+            onClick={() => switchLang('zh-CN')}
+          >
+            中
+          </button>
+          <button
+            className={`langBtn ${i18n.language === 'en-US' ? 'active' : ''}`}
+            onClick={() => switchLang('en-US')}
+          >
+            EN
+          </button>
         </div>
         <div className="headerSplit" />
         <button className="themeBtn" onClick={toggleTheme}>
@@ -44,13 +60,15 @@ function LoginPage() {
           <div className="logoWordmark">UMPay</div>
         </div>
 
-        <Typography.Title level={4} className="loginTitle">管理员登录</Typography.Title>
+        <Typography.Title level={4} className="loginTitle">
+          {t('login.title')}
+        </Typography.Title>
 
         <div className="formGroup">
-          <label className="formLabel">用户名</label>
+          <label className="formLabel">{t('login.username')}</label>
           <Input
             size="large"
-            placeholder="请输入用户名"
+            placeholder={t('login.usernamePlaceholder')}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             onPressEnter={handleLogin}
@@ -58,10 +76,10 @@ function LoginPage() {
         </div>
 
         <div className="formGroup">
-          <label className="formLabel">密码</label>
+          <label className="formLabel">{t('login.password')}</label>
           <Input.Password
             size="large"
-            placeholder="请输入密码"
+            placeholder={t('login.passwordPlaceholder')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onPressEnter={handleLogin}
@@ -70,10 +88,10 @@ function LoginPage() {
         </div>
 
         <div className="formGroup">
-          <label className="formLabel">TOTP 验证码（选填）</label>
+          <label className="formLabel">{t('login.totp')}</label>
           <Input
             size="large"
-            placeholder="如未启用两步验证，留空即可"
+            placeholder={t('login.totpPlaceholder')}
             value={totpCode}
             onChange={(e) => setTotpCode(e.target.value)}
             onPressEnter={handleLogin}
@@ -91,7 +109,7 @@ function LoginPage() {
           onClick={handleLogin}
           className="loginButton"
         >
-          登录
+          {t('login.submit')}
         </Button>
       </div>
     </div>

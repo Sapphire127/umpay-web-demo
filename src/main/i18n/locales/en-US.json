@@ -1,0 +1,12 @@
+{
+  "login": {
+    "title": "Admin Login",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "totp": "TOTP Code (optional)",
+    "totpPlaceholder": "Leave blank if 2FA is not enabled",
+    "submit": "Sign In"
+  }
+}

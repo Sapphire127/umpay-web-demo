@@ -1,0 +1,12 @@
+{
+  "login": {
+    "title": "管理员登录",
+    "username": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "totp": "TOTP 验证码（选填）",
+    "totpPlaceholder": "如未启用两步验证，留空即可",
+    "submit": "登录"
+  }
+}
