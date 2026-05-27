@@ -1,0 +1,44 @@
+.card {
+  width: 100% !important;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--spacing-md);
+
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.secondaryTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tertiaryTitle {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.gain {
+  color: var(--color-success);
+}
+
+.loss {
+  color: var(--color-error);
+}
+
+.disabled,
+.break-even {
+  color: var(--color-text-disabled);
+}
