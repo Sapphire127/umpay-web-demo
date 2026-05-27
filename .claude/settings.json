@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev*)",
+      "Bash(npm run build*)",
+      "Bash(npm run lint*)",
+      "Bash(npm test*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $(git rev-parse --show-toplevel 2>/dev/null || echo .) && git diff --name-only HEAD 2>/dev/null | xargs grep -l 'TODO\\|FIXME\\|HACK' 2>/dev/null && echo '[Hook] 变更中包含 TODO/FIXME/HACK，完成后请处理' || true"
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "frontend",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $PROJECT_DIR && npm run lint 2>&1 | tail -5"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "review",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $PROJECT_DIR && git diff --name-only HEAD~1 2>/dev/null | xargs grep -l 'TODO\\|FIXME\\|HACK' 2>/dev/null && echo '[Hook] 警告：变更中包含 TODO/FIXME/HACK' || echo '[Hook] 审查完成，未发现未完成标记'"
+          }
+        ]
+      }
+    ]
+  }
+}
