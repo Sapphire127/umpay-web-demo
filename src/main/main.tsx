@@ -5,6 +5,7 @@ import { ConfigProvider, theme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import { router } from './router';
 import { useThemeStore } from './stores/themeStore';
+import '@fontsource/cascadia-code';
 import './style/index.scss';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         token: {
           colorPrimary: '#1677ff',
           borderRadius: 8,
+          fontFamilyCode: 'var(--font-mono)',
         },
       }}
     >
