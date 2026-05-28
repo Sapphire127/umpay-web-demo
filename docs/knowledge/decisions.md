@@ -153,3 +153,50 @@
 **后果**:
 - 正面：默认英文与跨境业务场景一致，海外商户（CP）使用无障碍
 - 负面：中国管理员首次访问时需手动切换为中文，后续由 localStorage 记录偏好
+
+---
+
+## ADR-011: 业务错误通过拦截器统一抛 BusinessError
+
+**日期**: 2026-05-27
+
+**背景**: 后端所有响应（成功和失败）均返回 HTTP 200，通过 `ApiResult.code` 区分（200 成功，其余为业务错误码）。前端每个接口调用处都要判断 code 会极度冗余。
+
+**决策**: `domain/shared/request.ts` 的 Axios 响应拦截器统一检查 `res.data.code !== 200`，不满足则抛 `BusinessError`。各调用方用 try/catch 处理错误，成功路径自动返回 `data.data`。
+
+**后果**:
+- 正面：所有 API 调用自动受益，调用方只需 try/catch，无需每处判断 code
+- 正面：BusinessError.message 携带后端文案，可直接用于 `message.error()`
+- 负面：HTTP 层错误（网络断开、超时）和业务错误走同一个 catch 分支，需要 `err instanceof Error` 区分
+
+---
+
+## ADR-012: CRUD 页面采用工厂 + 包装器模式
+
+**日期**: 2026-05-28
+
+**背景**: 8 个管理模块遵循完全相同的 CRUD + status toggle 模式。每个模块手写 MSW handler 和 ProTable 配置会大量重复。
+
+**决策**:
+- MSW 层：`createCrudHandlers(basePath, initialData)` 工厂函数，一行生成 LIST/GET/POST/PUT/PUT-status 5 个 handler，内存存储 + 自增 ID
+- 前端层：`useProTable` 包装器统一 ProTable 的分页（`pageNum`/`pageSize`）、hasNext→total 转换、searchSpan 配置
+
+**后果**:
+- 正面：新模块开发只需写 types + columns + mock 数据，其余复用
+- 正面：后端 PaginationParams/PageResponse 格式变更只需改工厂和包装器
+- 负面：工厂生成的 handler 是标准 5 端点，AdminUser 等模块的额外端点（reset-credentials）需手动补充
+
+---
+
+## ADR-013: 展示字段强制国际化 + 白名单制度
+
+**日期**: 2026-05-28
+
+**背景**: 菜单、面包屑、表格列名等展示文案需要支持中英文切换。如果部分字段遗漏 `t()`，切换语言后出现中英混杂。
+
+**决策**: 所有页面展示字段必须通过 `t()` 国际化，包括菜单项、面包屑、表格列名、按钮文案、提示信息。仅品牌名 `UMPay`、技术标识符、console 日志为例外白名单。白名单如需新增，须记录原因。
+
+**后果**:
+- 正面：语言切换后全界面一致，无残留原语言文案
+- 正面：白名单制度防止"这个也可以例外"的滑坡
+- 负面：开发时需多写 `t()` 调用和 i18n key，有一定模板成本

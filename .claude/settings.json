@@ -16,6 +16,15 @@
   "hooks": {
     "PostToolUse": [
       {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $PROJECT_DIR && count=$(git diff --name-only HEAD 2>/dev/null | grep -c '' || echo 0) && if [ \"$count\" -ge 3 ] 2>/dev/null; then echo '[Hook] 已修改/新增多个文件，如有架构决策请记录 ADR 到 docs/knowledge/decisions.md，高/中复杂度功能请输出 Spec 到 docs/specs/' ; fi"
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write",
         "hooks": [
           {
