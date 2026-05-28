@@ -95,8 +95,9 @@
 
 ## 错误展示
 
-- 操作失败反馈使用 `message.error()`（Ant Design 全局提示），自动消失不残留
-- 操作成功反馈使用 `message.success()`
+- 操作失败反馈使用 `App.useApp().message.error()`（Ant Design 全局提示），自动消失不残留
+- 操作成功反馈使用 `App.useApp().message.success()`
+- 必须在 `ConfigProvider` 内包裹 `<App>` 组件，否则静态方法无法获取主题上下文
 - 持久性提示（需用户主动关闭）才用 `<Alert>`
 - 401/网络错误由 Axios 拦截器统一处理，组件层不需额外处理
 

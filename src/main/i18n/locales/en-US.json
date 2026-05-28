@@ -18,5 +18,8 @@
       "accountDisabled": "Account has been disabled",
       "totpInvalid": "Invalid TOTP code"
     }
+  },
+  "header": {
+    "logout": "Logout"
   }
 }

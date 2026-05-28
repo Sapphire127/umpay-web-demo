@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Typography, message } from 'antd';
+import { App, Form, Input, Button, Typography } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
@@ -17,9 +16,9 @@ interface LoginFormValues {
 }
 
 function LoginPage() {
-  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { login, isLoading } = useAuthStore();
+  const { message } = App.useApp();
   const rules = useFormRules();
 
   const [form] = Form.useForm<LoginFormValues>();
@@ -29,7 +28,6 @@ function LoginPage() {
     try {
       await login(values);
       message.success(t('login.success'));
-      navigate('/dashboard', { replace: true });
     } catch (err) {
       message.error(err instanceof Error ? err.message : t('login.error.default'));
     }

@@ -18,5 +18,8 @@
       "accountDisabled": "账户已被禁用",
       "totpInvalid": "验证码无效"
     }
+  },
+  "header": {
+    "logout": "退出登录"
   }
 }

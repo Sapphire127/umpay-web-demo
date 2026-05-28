@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { ConfigProvider, theme } from 'antd';
+import { App as AntApp, ConfigProvider, theme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import { useTranslation } from 'react-i18next';
@@ -29,7 +29,9 @@ export default function App() {
         },
       }}
     >
-      <RouterProvider router={router} />
+      <AntApp>
+        <RouterProvider router={router} />
+      </AntApp>
     </ConfigProvider>
   );
 }

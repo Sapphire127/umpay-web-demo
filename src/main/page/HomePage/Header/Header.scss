@@ -1,0 +1,44 @@
+.top-header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: var(--color-bg-container);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: var(--color-bg-layout);
+    }
+
+    .user-name {
+      font-size: 14px;
+      color: var(--color-text-primary);
+    }
+  }
+}

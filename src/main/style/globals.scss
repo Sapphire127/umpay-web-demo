@@ -1,3 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text-primary);
+  background: var(--color-bg-layout);
+  -webkit-font-smoothing: antialiased;
+}
+
 .card {
   width: 100% !important;
   padding: var(--spacing-md);
