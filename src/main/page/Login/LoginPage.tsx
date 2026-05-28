@@ -3,10 +3,10 @@ import { Form, Input, Button, Typography, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
-import { useThemeStore } from '@/stores/themeStore';
 import { useFormRules } from './useFormRules';
 import { useFormI18n } from '@/page/shared/useFormI18n';
 import LangSwitch from '@/page/shared/LangSwitch';
+import ThemeSwitch from '@/page/shared/ThemeSwitch';
 import Logo from '@/assets/logo.svg?react';
 import './LoginPage.scss';
 
@@ -20,7 +20,6 @@ function LoginPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { login, isLoading } = useAuthStore();
-  const { isDark, toggle: toggleTheme } = useThemeStore();
   const rules = useFormRules();
 
   const [form] = Form.useForm<LoginFormValues>();
@@ -40,9 +39,7 @@ function LoginPage() {
     <div className="loginPage">
       <div className="headerBar">
         <LangSwitch />
-        <button className="themeBtn" onClick={toggleTheme}>
-          {isDark ? '☀' : '☾'}
-        </button>
+        <ThemeSwitch />
       </div>
 
       <div className="loginCard">
