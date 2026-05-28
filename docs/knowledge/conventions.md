@@ -84,6 +84,12 @@
 - 禁止 any，确有必要标注理由
 - 接口用 interface，类型别名用 type
 
+### 枚举提取
+- 同一语义的字符串字面量出现在 **≥2 处不同位置**（如跨文件、跨模块）时，提取为 `enum`，放到 `domain/shared/types.ts`
+- 仅在一个模块内部使用的字面量，保留在模块的类型文件内即可（如 `domain/user/user.ts`）
+- 目的：消除魔法字符串，确保跨模块状态值一致性，TypeScript 编译期检查拼写错误
+- 示例：`'ENABLED' | 'DISABLED'` 在多个模块的 status 字段中出现 → 提取为 `Active`
+
 ## 类型定义规则
 - **domain 层的业务类型**：放在对应业务模型的 `.ts` 文件中（如 `trading.ts` 定义 Trading 相关 interface/type）
 - **page 层的类型**：单个组件使用的 Props 写在组件文件内；跨组件使用的提取到 `page/{Module}/shared/` 或 `page/shared/`

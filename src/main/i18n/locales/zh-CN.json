@@ -38,7 +38,18 @@
     "registrations": "入驻管理"
   },
   "user": {
-    "users": "用户管理"
+    "users": "用户管理",
+    "name": "姓名",
+    "role": "角色",
+    "status": "状态",
+    "enabled": "启用",
+    "disabled": "禁用",
+    "enable": "启用",
+    "disable": "停用",
+    "lastLoginAt": "最后登录",
+    "actions": "操作",
+    "create": "新增用户",
+    "statusUpdated": "状态已更新"
   },
   "system": {
     "systemConfig": "系统配置"

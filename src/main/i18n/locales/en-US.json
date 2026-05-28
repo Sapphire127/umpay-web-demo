@@ -38,7 +38,18 @@
     "registrations": "Registrations"
   },
   "user": {
-    "users": "Users"
+    "users": "Users",
+    "name": "Name",
+    "role": "Role",
+    "status": "Status",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "enable": "Enable",
+    "disable": "Disable",
+    "lastLoginAt": "Last Login",
+    "actions": "Actions",
+    "create": "Create User",
+    "statusUpdated": "Status updated"
   },
   "system": {
     "systemConfig": "System Config"
