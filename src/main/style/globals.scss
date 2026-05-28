@@ -58,3 +58,22 @@ html, body, #root {
 .break-even {
   color: var(--color-text-disabled);
 }
+
+.themeBtn {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: rgba(22, 119, 255, 0.1);
+    color: var(--color-primary);
+  }
+}

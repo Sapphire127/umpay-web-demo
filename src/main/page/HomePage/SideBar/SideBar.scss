@@ -16,9 +16,9 @@
   .sidebar-logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    padding: 16px 20px;
-    min-height: 56px;
+    height: 56px;
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
 
@@ -41,10 +41,23 @@
     display: none;
   }
 
+  &.collapsed .sidebar-logo {
+    padding: 16px 0;
+  }
+
   .sidebar-menu {
     flex: 1;
     overflow-y: auto;
     border-inline-end: 0 !important;
+    width: 100% !important;
+  }
+
+  &:not(.collapsed) .sidebar-menu {
+    width: 240px !important;
+  }
+
+  &.collapsed .sidebar-menu {
+    width: 64px !important;
   }
 
   .sidebar-footer {
