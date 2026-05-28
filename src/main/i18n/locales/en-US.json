@@ -21,5 +21,26 @@
   },
   "header": {
     "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "channel": {
+    "channels": "Channels",
+    "channelList": "Channel List",
+    "channelAccounts": "Channel Accounts",
+    "channelProducts": "Channel Products"
+  },
+  "cp": {
+    "cps": "CPs",
+    "cpList": "CP List",
+    "cpApps": "CP Apps",
+    "registrations": "Registrations"
+  },
+  "user": {
+    "users": "Users"
+  },
+  "system": {
+    "systemConfig": "System Config"
   }
 }

@@ -21,5 +21,26 @@
   },
   "header": {
     "logout": "退出登录"
+  },
+  "dashboard": {
+    "title": "工作台"
+  },
+  "channel": {
+    "channels": "通道管理",
+    "channelList": "通道列表",
+    "channelAccounts": "通道账户",
+    "channelProducts": "通道产品"
+  },
+  "cp": {
+    "cps": "合作方管理",
+    "cpList": "合作方列表",
+    "cpApps": "CP 应用",
+    "registrations": "入驻管理"
+  },
+  "user": {
+    "users": "用户管理"
+  },
+  "system": {
+    "systemConfig": "系统配置"
   }
 }
