@@ -4,6 +4,13 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export class BusinessError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'BusinessError';
+  }
+}
+
 export function handleError(error: unknown): void {
   if (error && typeof error === 'object' && 'response' in error) {
     const axiosError = error as { response?: { status: number; data?: { message?: string } } };

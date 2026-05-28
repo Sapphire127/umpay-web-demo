@@ -1,5 +1,5 @@
 import axios, { type AxiosRequestConfig } from 'axios';
-import { handleError, type ApiResponse } from './response';
+import { handleError, BusinessError, type ApiResponse } from './response';
 
 const instance = axios.create({
   timeout: 10000,
@@ -14,7 +14,12 @@ instance.interceptors.request.use((config) => {
 });
 
 instance.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    if (res.data.code !== 200) {
+      return Promise.reject(new BusinessError(res.data.message));
+    }
+    return res;
+  },
   (error) => {
     handleError(error);
     return Promise.reject(error);

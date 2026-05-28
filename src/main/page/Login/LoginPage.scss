@@ -33,39 +33,6 @@
     padding: 4px 6px;
   }
 
-  .langGroup {
-    display: flex;
-    gap: 2px;
-  }
-
-  .langBtn {
-    border: 0;
-    background: transparent;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-
-    &.active {
-      background: var(--color-primary);
-      color: #fff;
-    }
-
-    &:hover:not(.active) {
-      color: var(--color-text-primary);
-    }
-  }
-
-  .headerSplit {
-    width: 1px;
-    height: 22px;
-    background: var(--color-border);
-    margin: 0 2px;
-  }
-
   .themeBtn {
     width: 32px;
     height: 32px;
@@ -120,25 +87,6 @@
   .loginTitle {
     text-align: center;
     margin-bottom: 28px !important;
-  }
-
-  .formGroup {
-    margin-bottom: 20px;
-  }
-
-  .formLabel {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    margin-bottom: 6px;
-  }
-
-  .formError {
-    color: var(--color-error, #ff4d4f);
-    font-size: 13px;
-    margin-bottom: 16px;
-    text-align: center;
   }
 
   .loginButton {

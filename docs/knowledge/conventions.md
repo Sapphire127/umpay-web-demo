@@ -93,6 +93,46 @@
 - Props 类型显式定义
 - 页面级组件包裹 ErrorBoundary
 
+## 错误展示
+
+- 操作失败反馈使用 `message.error()`（Ant Design 全局提示），自动消失不残留
+- 操作成功反馈使用 `message.success()`
+- 持久性提示（需用户主动关闭）才用 `<Alert>`
+- 401/网络错误由 Axios 拦截器统一处理，组件层不需额外处理
+
+## 表单验证
+
+### 文件组织
+- 表单验证逻辑抽成 `useFormRules.ts`（或 `useForm.ts`），与表单组件放在同一目录
+- 纯校验函数（不依赖 React/Form）放 `validator.ts`，供 `useFormRules` 引用
+- 两个表单规则完全一致时，提取到模块 `shared/` 下共用（这种情况很少）
+- 后端返回的错误通过 `message.error()` 展示，不做字段级错误映射
+### 规则文件结构示例
+```ts
+// useFormRules.ts — 与表单组件同级
+export const useFormRules = () => {
+    return {
+        username: [{ required: true, message: '请输入用户名' }],
+        password: [{ required: true, message: '请输入密码' }],
+        amount: [
+            { required: true, message: '请输入金额' },
+            { type: 'number' as const, min: 0, message: '请输入大于0的数字' }
+        ],
+    };
+};
+```
+
+### 职责分层
+| 文件 | 放哪 | 职责 |
+|---|---|---|
+| `useFormRules.ts` | 与表单组件同级 | Ant Design rules 声明（required/type/custom validator） |
+| `validator.ts` | 模块 `shared/` | 纯校验函数，不依赖 React/Form，`(value) => ValidationResult` |
+
+### 语言切换时表单错误更新
+- **为什么**：Ant Design Form 的 `rules` 属性只在触发校验时读取。语言切换后 rules 对象随 `t()` 更新，但已存在的字段错误不会自动重渲染——用户看到的仍是上一个语言的错误文案
+- **效果**：切换语言后，表单已有错误文案即时刷新为新语言
+- **实现**：使用公共 hook `useFormI18n(form, i18n.language)`，位于 `page/shared/useFormI18n.ts`
+
 ## API 调用
 - domain Service 层调用 `domain/shared/request.ts`
 - page 层通过 Service 获取数据，不直接写 fetch

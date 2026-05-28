@@ -7,6 +7,16 @@
     "passwordPlaceholder": "Enter password",
     "totp": "TOTP Code (optional)",
     "totpPlaceholder": "Leave blank if 2FA is not enabled",
-    "submit": "Sign In"
+    "usernameRequired": "Please enter username",
+    "passwordRequired": "Please enter password",
+    "totpInvalidRule": "Enter 6-digit TOTP code",
+    "submit": "Sign In",
+    "success": "Login successful",
+    "error": {
+      "default": "Login failed",
+      "credentials": "Invalid username or password",
+      "accountDisabled": "Account has been disabled",
+      "totpInvalid": "Invalid TOTP code"
+    }
   }
 }

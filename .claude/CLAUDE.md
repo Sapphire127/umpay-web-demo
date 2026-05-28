@@ -81,6 +81,8 @@ src/
 | 业务方法 | 动词/动名词组 | `getAccount()`, `calculateROI()` |
 | 纯逻辑文件 | camelCase，名词 | `trendData.ts`, `numberFormatter.ts` |
 | Hook 文件 | use + 名词，camelCase | `useSymbols.ts` |
+| 表单验证 | useFormRules 或 useForm | `useFormRules.ts` |
+| 纯校验 | validator | `validator.ts` |
 | 样式文件 | 与组件同名 | `AssetList.scss` |
 | 类型定义文件 | 名词 | `trading.ts`, `assets.ts` |
 

@@ -1,52 +1,45 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
 import { useThemeStore } from '@/stores/themeStore';
+import { useFormRules } from './useFormRules';
+import { useFormI18n } from '@/page/shared/useFormI18n';
+import LangSwitch from '@/page/shared/LangSwitch';
 import Logo from '@/assets/logo.svg?react';
 import './LoginPage.scss';
+
+interface LoginFormValues {
+  username: string;
+  password: string;
+  totpCode?: string;
+}
 
 function LoginPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { login, isLoading, errorMsg } = useAuthStore();
+  const { login, isLoading } = useAuthStore();
   const { isDark, toggle: toggleTheme } = useThemeStore();
+  const rules = useFormRules();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [totpCode, setTotpCode] = useState('');
+  const [form] = Form.useForm<LoginFormValues>();
+  useFormI18n(form, i18n.language);
 
-  const handleLogin = async () => {
-    await login({ username, password, totpCode: totpCode || undefined });
-    if (useAuthStore.getState().token) {
+  const handleFinish = async (values: LoginFormValues) => {
+    try {
+      await login(values);
+      message.success(t('login.success'));
       navigate('/dashboard', { replace: true });
+    } catch (err) {
+      message.error(err instanceof Error ? err.message : t('login.error.default'));
     }
-  };
-
-  const switchLang = (lang: string) => {
-    i18n.changeLanguage(lang);
   };
 
   return (
     <div className="loginPage">
       <div className="headerBar">
-        <div className="langGroup">
-          <button
-            className={`langBtn ${i18n.language === 'zh-CN' ? 'active' : ''}`}
-            onClick={() => switchLang('zh-CN')}
-          >
-            中
-          </button>
-          <button
-            className={`langBtn ${i18n.language === 'en-US' ? 'active' : ''}`}
-            onClick={() => switchLang('en-US')}
-          >
-            EN
-          </button>
-        </div>
-        <div className="headerSplit" />
+        <LangSwitch />
         <button className="themeBtn" onClick={toggleTheme}>
           {isDark ? '☀' : '☾'}
         </button>
@@ -64,53 +57,44 @@ function LoginPage() {
           {t('login.title')}
         </Typography.Title>
 
-        <div className="formGroup">
-          <label className="formLabel">{t('login.username')}</label>
-          <Input
-            size="large"
-            placeholder={t('login.usernamePlaceholder')}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            onPressEnter={handleLogin}
-          />
-        </div>
+        <Form form={form} onFinish={handleFinish} layout="vertical" size="large">
+          <Form.Item
+            name="username"
+            label={t('login.username')}
+            rules={rules.username}
+          >
+            <Input placeholder={t('login.usernamePlaceholder')} />
+          </Form.Item>
 
-        <div className="formGroup">
-          <label className="formLabel">{t('login.password')}</label>
-          <Input.Password
-            size="large"
-            placeholder={t('login.passwordPlaceholder')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onPressEnter={handleLogin}
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-          />
-        </div>
+          <Form.Item
+            name="password"
+            label={t('login.password')}
+            rules={rules.password}
+          >
+            <Input.Password
+              placeholder={t('login.passwordPlaceholder')}
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
+          </Form.Item>
 
-        <div className="formGroup">
-          <label className="formLabel">{t('login.totp')}</label>
-          <Input
-            size="large"
-            placeholder={t('login.totpPlaceholder')}
-            value={totpCode}
-            onChange={(e) => setTotpCode(e.target.value)}
-            onPressEnter={handleLogin}
-            maxLength={6}
-          />
-        </div>
+          <Form.Item
+            name="totpCode"
+            label={t('login.totp')}
+            rules={rules.totpCode}
+          >
+            <Input placeholder={t('login.totpPlaceholder')} maxLength={6} />
+          </Form.Item>
 
-        {errorMsg && <div className="formError">{errorMsg}</div>}
-
-        <Button
-          type="primary"
-          size="large"
-          block
-          loading={isLoading}
-          onClick={handleLogin}
-          className="loginButton"
-        >
-          {t('login.submit')}
-        </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            loading={isLoading}
+            className="loginButton"
+          >
+            {t('login.submit')}
+          </Button>
+        </Form>
       </div>
     </div>
   );

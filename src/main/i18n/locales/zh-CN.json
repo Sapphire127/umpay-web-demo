@@ -7,6 +7,16 @@
     "passwordPlaceholder": "请输入密码",
     "totp": "TOTP 验证码（选填）",
     "totpPlaceholder": "如未启用两步验证，留空即可",
-    "submit": "登录"
+    "usernameRequired": "请输入用户名",
+    "passwordRequired": "请输入密码",
+    "totpInvalidRule": "请输入6位数字验证码",
+    "submit": "登录",
+    "success": "登录成功",
+    "error": {
+      "default": "登录失败",
+      "credentials": "用户名或密码错误",
+      "accountDisabled": "账户已被禁用",
+      "totpInvalid": "验证码无效"
+    }
   }
 }
